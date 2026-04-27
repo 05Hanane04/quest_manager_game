@@ -1,0 +1,68 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Manage Users - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#128101; Manage Users</h1>
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-sm btn-secondary">Back to Dashboard</a>
+</div>
+
+{% if user_data %}
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Character</th>
+                <th>Class</th>
+                <th>Level</th>
+                <th>XP</th>
+                <th>Quests</th>
+                <th>Completed</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in user_data %}
+            <tr>
+                <td><strong>{{ item.user.username }}</strong></td>
+                <td>{{ item.user.email|default:"&mdash;" }}</td>
+                <td>{% if item.character %}{{ item.character.name }}{% else %}<span style="color: var(--text-muted);">No character</span>{% endif %}</td>
+                <td>{% if item.character %}{{ item.character.get_character_class_display }}{% else %}&mdash;{% endif %}</td>
+                <td>{% if item.character %}{{ item.character.level }}{% else %}&mdash;{% endif %}</td>
+                <td>{% if item.character %}{{ item.character.xp }} XP{% else %}&mdash;{% endif %}</td>
+                <td>{{ item.quest_count }}</td>
+                <td>{{ item.completed_count }}</td>
+                <td>
+                    {% if item.user.is_active %}
+                    <span class="badge badge-active">Active</span>
+                    {% else %}
+                    <span class="badge badge-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'admin_user_toggle' item.user.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        {% if item.user.is_active %}
+                        <button type="submit" class="btn btn-sm btn-danger">Deactivate</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-sm btn-success">Activate</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="card">
+    <div class="empty-state">
+        <p>No players registered yet.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

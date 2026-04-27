@@ -1,0 +1,122 @@
+{% extends 'game/base.html' %}
+
+{% block title %}{{ character.name }} - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#9876; My Character</h1>
+    <div class="actions">
+        <a href="{% url 'character_edit' %}" class="btn btn-sm btn-primary">Edit Character</a>
+        <a href="{% url 'character_delete' %}" class="btn btn-sm btn-danger">Delete Character</a>
+    </div>
+</div>
+
+<!-- ============================================================
+     CHARACTER CARD
+     ============================================================ -->
+<div class="character-card">
+    <div class="character-header">
+        <div>
+            <h2 class="character-name">{{ character.name }}</h2>
+            <p class="character-class">{{ character.get_character_class_display }}</p>
+        </div>
+    </div>
+
+    <div class="character-stats">
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.level }}</div>
+            <div class="character-stat-label">Level</div>
+        </div>
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.xp }}</div>
+            <div class="character-stat-label">Total XP</div>
+        </div>
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.xp_for_current_level }}</div>
+            <div class="character-stat-label">Current Level XP</div>
+        </div>
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.xp_to_next_level }}</div>
+            <div class="character-stat-label">XP to Next Level</div>
+        </div>
+    </div>
+
+    <!-- XP Progress Bar -->
+    <div style="margin-top: 1.5rem;">
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+            Level {{ character.level }} Progress: {{ character.xp_for_current_level }} / 100 XP
+        </p>
+        <div class="xp-bar-container">
+            <div class="xp-bar" style="width: {{ character.xp_for_current_level }}%;">
+                {{ character.xp_for_current_level }}%
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     QUEST HISTORY
+     ============================================================ -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">&#128220; Quest History</h3>
+        <a href="{% url 'quest_list' %}" class="btn btn-sm btn-secondary">Browse Quests</a>
+    </div>
+
+    {% if quest_history %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Quest</th>
+                    <th>Difficulty</th>
+                    <th>XP Reward</th>
+                    <th>Status</th>
+                    <th>Accepted</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pq in quest_history %}
+                <tr>
+                    <td>{{ pq.quest.title }}</td>
+                    <td><span class="badge badge-{{ pq.quest.difficulty }}">{{ pq.quest.get_difficulty_display }}</span></td>
+                    <td>{{ pq.quest.xp_reward }} XP</td>
+                    <td><span class="badge badge-{{ pq.status }}">{{ pq.get_status_display }}</span></td>
+                    <td>{{ pq.accepted_at|date:"M d, Y" }}</td>
+                    <td>{% if pq.completed_at %}{{ pq.completed_at|date:"M d, Y" }}{% else %}&mdash;{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No quests attempted yet. <a href="{% url 'quest_list' %}">Browse available quests</a></p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- ============================================================
+     CHARACTER INFO
+     ============================================================ -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">&#128196; Character Info</h3>
+    </div>
+    <table>
+        <tr>
+            <td style="color: var(--text-secondary); width: 200px;">Owner</td>
+            <td>{{ character.user.username }}</td>
+        </tr>
+        <tr>
+            <td style="color: var(--text-secondary);">Created</td>
+            <td>{{ character.created_at|date:"M d, Y H:i" }}</td>
+        </tr>
+        <tr>
+            <td style="color: var(--text-secondary);">Last Updated</td>
+            <td>{{ character.updated_at|date:"M d, Y H:i" }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

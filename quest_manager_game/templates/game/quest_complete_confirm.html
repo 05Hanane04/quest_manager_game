@@ -1,0 +1,29 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Complete Quest - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title" style="color: var(--accent-green);">&#11088; Complete Quest</h1>
+
+        <div class="confirm-box">
+            <p>Mark <strong style="color: var(--accent-gold);">{{ player_quest.quest.title }}</strong> as completed?</p>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                You will earn <strong style="color: var(--accent-gold);">{{ player_quest.quest.xp_reward }} XP</strong>
+                for completing this
+                <span class="badge badge-{{ player_quest.quest.difficulty }}">{{ player_quest.quest.get_difficulty_display }}</span>
+                quest.
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="confirm-actions">
+                    <button type="submit" class="btn btn-success">Complete Quest</button>
+                    <a href="{% url 'quest_list' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

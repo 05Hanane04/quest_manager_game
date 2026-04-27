@@ -1,0 +1,73 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Quest Manager Game - Home{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+    <h1 class="hero-title">&#9876; Quest Manager Game</h1>
+    <p class="hero-subtitle">
+        Embark on an epic adventure! Create your character, accept challenging quests,
+        earn XP, and level up in this RPG quest management system.
+    </p>
+    <div class="hero-actions">
+        <a href="{% url 'register' %}" class="btn btn-primary">Start Your Adventure</a>
+        <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+    </div>
+</section>
+
+<!-- ============================================================
+     FEATURES SECTION
+     ============================================================ -->
+<section class="feature-grid">
+    <div class="feature-card">
+        <div class="feature-icon">&#9876;</div>
+        <h3 class="feature-title">Create Your Hero</h3>
+        <p class="feature-text">
+            Choose from 5 unique classes: Warrior, Mage, Rogue, Healer, or Ranger.
+            Customize your character and begin your journey.
+        </p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">&#128220;</div>
+        <h3 class="feature-title">Accept Quests</h3>
+        <p class="feature-text">
+            Browse available quests of varying difficulty. Accept challenges
+            that match your skill level and earn rewards.
+        </p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">&#11088;</div>
+        <h3 class="feature-title">Level Up</h3>
+        <p class="feature-text">
+            Complete quests to earn XP. Every 100 XP grants a new level.
+            Climb the leaderboard and become a legend!
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================
+     XP REWARDS INFO
+     ============================================================ -->
+<section style="margin-top: 3rem;">
+    <div class="card">
+        <h2 class="card-title" style="text-align: center; margin-bottom: 1.5rem;">Quest Rewards</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" style="color: var(--easy-color);">10 XP</div>
+                <div class="stat-label">Easy Quests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: var(--medium-color);">20 XP</div>
+                <div class="stat-label">Medium Quests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: var(--hard-color);">50 XP</div>
+                <div class="stat-label">Hard Quests</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

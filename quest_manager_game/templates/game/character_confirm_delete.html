@@ -1,0 +1,27 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Delete Character - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title" style="color: var(--accent-red);">&#9888; Delete Character</h1>
+
+        <div class="confirm-box">
+            <p>Are you sure you want to delete <strong style="color: var(--accent-gold);">{{ character.name }}</strong>?</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                This action cannot be undone. Your character (Level {{ character.level }}, {{ character.xp }} XP)
+                and all quest progress will be permanently deleted.
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="confirm-actions">
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    <a href="{% url 'character_detail' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

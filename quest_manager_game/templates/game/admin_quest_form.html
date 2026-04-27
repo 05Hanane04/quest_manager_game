@@ -1,0 +1,45 @@
+{% extends 'game/base.html' %}
+
+{% block title %}{{ action }} Quest - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="auth-container" style="max-width: 600px;">
+    <div class="auth-card">
+        <h1 class="auth-title">&#128220; {{ action }} Quest</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                    <p class="form-error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- XP Reward Reference -->
+            <div style="background-color: var(--bg-input); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    <strong>XP Rewards by Difficulty:</strong>
+                </p>
+                <p style="font-size: 0.85rem;">
+                    <span class="badge badge-easy">Easy</span> = 10 XP &nbsp;
+                    <span class="badge badge-medium">Medium</span> = 20 XP &nbsp;
+                    <span class="badge badge-hard">Hard</span> = 50 XP
+                </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">{{ action }} Quest</button>
+        </form>
+
+        <div class="auth-footer">
+            <a href="{% url 'admin_quest_list' %}">Back to Quest List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

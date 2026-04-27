@@ -1,0 +1,124 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Player Dashboard - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#127968; Player Dashboard</h1>
+    <span>Welcome, <strong>{{ user.username }}</strong>!</span>
+</div>
+
+<!-- ============================================================
+     CHARACTER SUMMARY
+     ============================================================ -->
+{% if character %}
+<div class="character-card">
+    <div class="character-header">
+        <div>
+            <h2 class="character-name">{{ character.name }}</h2>
+            <p class="character-class">{{ character.get_character_class_display }}</p>
+        </div>
+        <a href="{% url 'character_detail' %}" class="btn btn-primary btn-sm">View Character</a>
+    </div>
+
+    <div class="character-stats">
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.level }}</div>
+            <div class="character-stat-label">Level</div>
+        </div>
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.xp }}</div>
+            <div class="character-stat-label">Total XP</div>
+        </div>
+        <div class="character-stat">
+            <div class="character-stat-value">{{ character.xp_to_next_level }}</div>
+            <div class="character-stat-label">XP to Next Level</div>
+        </div>
+    </div>
+
+    <!-- XP Progress Bar -->
+    <div style="margin-top: 1.5rem;">
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+            Level {{ character.level }} Progress: {{ character.xp_for_current_level }} / 100 XP
+        </p>
+        <div class="xp-bar-container">
+            <div class="xp-bar" style="width: {{ character.xp_for_current_level }}%;">
+                {{ character.xp_for_current_level }}%
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="empty-state">
+        <p>You don't have a character yet!</p>
+        <a href="{% url 'character_create' %}" class="btn btn-primary">Create Your Character</a>
+    </div>
+</div>
+{% endif %}
+
+<!-- ============================================================
+     DASHBOARD GRID
+     ============================================================ -->
+<div class="grid-2">
+    <!-- Active Quests -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">&#9876; Active Quests</h3>
+            <a href="{% url 'quest_list' %}" class="btn btn-sm btn-secondary">View All</a>
+        </div>
+        {% if accepted_quests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Quest</th>
+                    <th>Difficulty</th>
+                    <th>XP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pq in accepted_quests %}
+                <tr>
+                    <td>{{ pq.quest.title }}</td>
+                    <td><span class="badge badge-{{ pq.quest.difficulty }}">{{ pq.quest.get_difficulty_display }}</span></td>
+                    <td>{{ pq.quest.xp_reward }} XP</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No active quests. <a href="{% url 'quest_list' %}">Browse available quests</a></p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">&#128202; Your Stats</h3>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ total_quests }}</div>
+                <div class="stat-label">Total Quests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: var(--accent-green);">{{ completed_quests }}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+
+        <!-- Available Quests Preview -->
+        {% if available_quests %}
+        <h4 style="color: var(--accent-gold); margin: 1rem 0 0.5rem;">Available Quests</h4>
+        {% for quest in available_quests %}
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+            <span>{{ quest.title }}</span>
+            <span class="badge badge-{{ quest.difficulty }}">{{ quest.get_difficulty_display }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

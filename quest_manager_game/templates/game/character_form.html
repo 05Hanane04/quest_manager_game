@@ -1,0 +1,37 @@
+{% extends 'game/base.html' %}
+
+{% block title %}{{ action }} Character - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title">&#9876; {{ action }} Character</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                    <p class="form-error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary btn-block">{{ action }} Character</button>
+        </form>
+
+        <div class="auth-footer">
+            {% if action == 'Edit' %}
+            <a href="{% url 'character_detail' %}">Back to Character</a>
+            {% else %}
+            <a href="{% url 'player_dashboard' %}">Back to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

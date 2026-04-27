@@ -1,0 +1,61 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Manage Quests - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#128220; Manage Quests</h1>
+    <a href="{% url 'admin_quest_create' %}" class="btn btn-primary">+ Create New Quest</a>
+</div>
+
+{% if quests %}
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Difficulty</th>
+                <th>XP Reward</th>
+                <th>Status</th>
+                <th>Players</th>
+                <th>Completed</th>
+                <th>Created By</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quest in quests %}
+            <tr>
+                <td><strong>{{ quest.title }}</strong></td>
+                <td><span class="badge badge-{{ quest.difficulty }}">{{ quest.get_difficulty_display }}</span></td>
+                <td>{{ quest.xp_reward }} XP</td>
+                <td>
+                    {% if quest.is_active %}
+                    <span class="badge badge-active">Active</span>
+                    {% else %}
+                    <span class="badge badge-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>{{ quest.player_count }}</td>
+                <td>{{ quest.completed_count }}</td>
+                <td>{% if quest.created_by %}{{ quest.created_by.username }}{% else %}&mdash;{% endif %}</td>
+                <td>
+                    <div class="actions">
+                        <a href="{% url 'admin_quest_edit' quest.id %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'admin_quest_delete' quest.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="card">
+    <div class="empty-state">
+        <p>No quests created yet.</p>
+        <a href="{% url 'admin_quest_create' %}" class="btn btn-primary">Create Your First Quest</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

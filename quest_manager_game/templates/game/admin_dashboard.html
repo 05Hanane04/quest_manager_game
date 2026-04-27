@@ -1,0 +1,156 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Admin Dashboard - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#128081; Admin Dashboard</h1>
+    <span>Welcome, <strong>{{ user.username }}</strong> (Admin)</span>
+</div>
+
+<!-- ============================================================
+     STATISTICS OVERVIEW
+     ============================================================ -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ total_users }}</div>
+        <div class="stat-label">Total Players</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ total_characters }}</div>
+        <div class="stat-label">Characters</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ total_quests }}</div>
+        <div class="stat-label">Total Quests</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-green);">{{ active_quests }}</div>
+        <div class="stat-label">Active Quests</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-blue);">{{ total_accepted }}</div>
+        <div class="stat-label">Quests In Progress</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" style="color: var(--accent-green);">{{ total_completed }}</div>
+        <div class="stat-label">Quests Completed</div>
+    </div>
+</div>
+
+<div class="grid-2">
+    <!-- ============================================================
+         QUEST DIFFICULTY DISTRIBUTION
+         ============================================================ -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">&#128202; Quest Distribution</h3>
+            <a href="{% url 'admin_quest_create' %}" class="btn btn-sm btn-primary">+ New Quest</a>
+        </div>
+        {% if quest_stats %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Difficulty</th>
+                    <th>Count</th>
+                    <th>XP Reward</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in quest_stats %}
+                <tr>
+                    <td><span class="badge badge-{{ stat.difficulty }}">{{ stat.difficulty|title }}</span></td>
+                    <td>{{ stat.count }}</td>
+                    <td>
+                        {% if stat.difficulty == 'easy' %}10 XP
+                        {% elif stat.difficulty == 'medium' %}20 XP
+                        {% elif stat.difficulty == 'hard' %}50 XP
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No quests created yet.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ============================================================
+         TOP PLAYERS LEADERBOARD
+         ============================================================ -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">&#127942; Top Players</h3>
+            <a href="{% url 'admin_user_list' %}" class="btn btn-sm btn-secondary">View All</a>
+        </div>
+        {% if top_characters %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Character</th>
+                    <th>Class</th>
+                    <th>Level</th>
+                    <th>XP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for char in top_characters %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ char.name }}</td>
+                    <td>{{ char.get_character_class_display }}</td>
+                    <td>{{ char.level }}</td>
+                    <td>{{ char.xp }} XP</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No characters created yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ============================================================
+     RECENT ACTIVITY
+     ============================================================ -->
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">&#128338; Recent Completions</h3>
+    </div>
+    {% if recent_completions %}
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Quest</th>
+                <th>Difficulty</th>
+                <th>XP Earned</th>
+                <th>Completed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pq in recent_completions %}
+            <tr>
+                <td>{{ pq.player.username }}</td>
+                <td>{{ pq.quest.title }}</td>
+                <td><span class="badge badge-{{ pq.quest.difficulty }}">{{ pq.quest.get_difficulty_display }}</span></td>
+                <td>{{ pq.quest.xp_reward }} XP</td>
+                <td>{{ pq.completed_at|date:"M d, Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <p>No quest completions yet.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

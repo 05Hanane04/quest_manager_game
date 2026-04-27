@@ -1,0 +1,76 @@
+{% extends 'game/base.html' %}
+
+{% block title %}Available Quests - Quest Manager Game{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">&#128220; Available Quests</h1>
+    <a href="{% url 'player_dashboard' %}" class="btn btn-sm btn-secondary">Back to Dashboard</a>
+</div>
+
+{% if quest_data %}
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Quest</th>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th>XP Reward</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in quest_data %}
+            <tr>
+                <td><strong>{{ item.quest.title }}</strong></td>
+                <td style="max-width: 300px;">{{ item.quest.description|truncatewords:20 }}</td>
+                <td><span class="badge badge-{{ item.quest.difficulty }}">{{ item.quest.get_difficulty_display }}</span></td>
+                <td>{{ item.quest.xp_reward }} XP</td>
+                <td><span class="badge badge-{{ item.status }}">{{ item.status|title }}</span></td>
+                <td>
+                    {% if item.status == 'available' %}
+                        <a href="{% url 'quest_accept' item.quest.id %}" class="btn btn-sm btn-primary">Accept</a>
+                    {% elif item.status == 'accepted' %}
+                        <a href="{% url 'quest_complete' item.quest.id %}" class="btn btn-sm btn-success">Complete</a>
+                    {% elif item.status == 'completed' %}
+                        <span style="color: var(--accent-green);">&#10003; Done</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="card">
+    <div class="empty-state">
+        <p>No quests available at the moment. Check back later!</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- ============================================================
+     XP REWARDS REFERENCE
+     ============================================================ -->
+<div class="card" style="margin-top: 2rem;">
+    <div class="card-header">
+        <h3 class="card-title">&#11088; XP Rewards Reference</h3>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" style="color: var(--easy-color);">10 XP</div>
+            <div class="stat-label">Easy</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: var(--medium-color);">20 XP</div>
+            <div class="stat-label">Medium</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color: var(--hard-color);">50 XP</div>
+            <div class="stat-label">Hard</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
