@@ -16,6 +16,7 @@ Un jeu RPG web développé avec Django et MySQL. Les joueurs créent des personn
 ---
 
 ### Joueur
+
 - Inscription et connexion
 - Création et gestion de son personnage (classe, XP, niveau)
 - Consulter les quêtes disponibles
@@ -23,6 +24,7 @@ Un jeu RPG web développé avec Django et MySQL. Les joueurs créent des personn
 - Gagner de l'XP automatiquement à la complétion
 
 ### Administrateur
+
 - Créer, modifier et supprimer des quêtes
 - Gérer les utilisateurs
 - Consulter les statistiques globales du jeu
@@ -33,18 +35,21 @@ Un jeu RPG web développé avec Django et MySQL. Les joueurs créent des personn
 ## Installation et configuration
 
 ### Prérequis
+
 - Python 3.x installé
 - XAMPP installé avec MySQL démarré
 
 ### Étapes
 
 **1. Cloner le projet**
+
 ```bash
 git clone https://github.com/ton-username/quest-manager-game.git
 cd quest-manager-game
 ```
 
 **2. Créer et activer l'environnement virtuel**
+
 ```bash
 # Windows
 python -m venv myenv
@@ -52,6 +57,7 @@ myenv\Scripts\activate
 ```
 
 **3. Installer les dépendances**
+
 ```bash
 pip install django mysqlclient
 ```
@@ -81,17 +87,20 @@ DATABASES = {
 ```
 
 **6. Appliquer les migrations**
+
 ```bash
 cd quest_manager_game
 python manage.py migrate
 ```
 
 **7. Insérer les données de test**
+
 ```bash
 python seed_data.py
 ```
 
 **8. Lancer le serveur**
+
 ```bash
 python manage.py runserver
 ```
@@ -102,21 +111,21 @@ L'application est accessible sur `http://127.0.0.1:8000`
 
 ## Comptes de test
 
-| Rôle | Username | Mot de passe |
-|------|----------|--------------|
-| Administrateur | admin | admin123 |
-| Joueur 1 | player1 | player123 |
-| Joueur 2 | player2 | player123 |
+| Rôle           | Username | Mot de passe |
+| -------------- | -------- | ------------ |
+| Administrateur | admin    | admin123     |
+| Joueur 1       | player1  | player123    |
+| Joueur 2       | player2  | player123    |
 
 ---
 
 ## Modèles de données
 
-| Modèle | Table MySQL | Description |
-|--------|-------------|-------------|
-| Character | game_character | Personnage du joueur (nom, classe, XP, niveau) |
-| Quest | game_quest | Quêtes créées par l'admin (titre, difficulté, récompense XP) |
-| PlayerQuest | game_playerquest | Liaison joueur ↔ quête (statut : accepted / completed) |
+| Modèle      | Table MySQL      | Description                                                  |
+| ----------- | ---------------- | ------------------------------------------------------------ |
+| Character   | game_character   | Personnage du joueur (nom, classe, XP, niveau)               |
+| Quest       | game_quest       | Quêtes créées par l'admin (titre, difficulté, récompense XP) |
+| PlayerQuest | game_playerquest | Liaison joueur ↔ quête (statut : accepted / completed)       |
 
 ---
 
