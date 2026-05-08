@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="page-header">
-    <h1 class="page-title">&#128081; Admin Dashboard</h1>
+<h1 class="page-title">&#9670; Admin Dashboard</h1>
     <span>Welcome, <strong>{{ user.username }}</strong> (Admin)</span>
 </div>
 
@@ -44,7 +44,7 @@
          ============================================================ -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">&#128202; Quest Distribution</h3>
+<h3 class="card-title">&#9998; Quest Distribution</h3>
             <a href="{% url 'admin_quest_create' %}" class="btn btn-sm btn-primary">+ New Quest</a>
         </div>
         {% if quest_stats %}
@@ -83,7 +83,7 @@
          ============================================================ -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">&#127942; Top Players</h3>
+<h3 class="card-title">&#9656; Top Players</h3>
             <a href="{% url 'admin_user_list' %}" class="btn btn-sm btn-secondary">View All</a>
         </div>
         {% if top_characters %}
@@ -122,7 +122,7 @@
      ============================================================ -->
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">&#128338; Recent Completions</h3>
+<h3 class="card-title">&#10022; Recent Completions</h3>
     </div>
     {% if recent_completions %}
     <table>

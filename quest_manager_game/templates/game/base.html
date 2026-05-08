@@ -1,77 +1,74 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Quest Manager Game{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
     <div class="page-wrapper">
-
-        <!-- ============================================================
+      <!-- ============================================================
              NAVIGATION BAR
              ============================================================ -->
-        <nav class="navbar">
-            <div class="container">
-                <a href="{% url 'home' %}" class="navbar-brand">
-                    &#9876; Quest Manager
-                </a>
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        {% if user.is_staff %}
-                            <!-- Admin Navigation -->
-                            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
-                            <li><a href="{% url 'admin_quest_list' %}">Manage Quests</a></li>
-                            <li><a href="{% url 'admin_user_list' %}">Manage Users</a></li>
-                        {% else %}
-                            <!-- Player Navigation -->
-                            <li><a href="{% url 'player_dashboard' %}">Dashboard</a></li>
-                            <li><a href="{% url 'character_detail' %}">Character</a></li>
-                            <li><a href="{% url 'quest_list' %}">Quests</a></li>
-                        {% endif %}
-                        <li><span class="nav-user">{{ user.username }}</span></li>
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'register' %}">Register</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+      <nav class="navbar">
+        <div class="container">
+          <a href="{% url 'home' %}" class="navbar-brand">
+            &#9876; Quest Manager
+          </a>
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %} {% if user.is_staff %}
+            <!-- Admin Navigation -->
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'admin_quest_list' %}">Manage Quests</a></li>
+            <li><a href="{% url 'admin_user_list' %}">Manage Users</a></li>
+            {% else %}
+            <!-- Player Navigation -->
+            <li><a href="{% url 'player_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'character_detail' %}">Character</a></li>
+            <li><a href="{% url 'quest_list' %}">Quests</a></li>
+            {% endif %}
+            <li><span class="nav-user">{{ user.username }}</span></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
 
-        <!-- ============================================================
+      <!-- ============================================================
              MAIN CONTENT
              ============================================================ -->
-        <main class="main-content">
-            <div class="container">
+      <main class="main-content">
+        <div class="container">
+          <!-- Flash Messages -->
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li class="alert alert-{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %} {% block content %}{% endblock %}
+        </div>
+      </main>
 
-                <!-- Flash Messages -->
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-
-                {% block content %}{% endblock %}
-
-            </div>
-        </main>
-
-        <!-- ============================================================
+      <!-- ============================================================
              FOOTER
              ============================================================ -->
-        <footer class="footer">
-            <div class="container">
-                <p>Quest Manager Game &copy; 2026 &mdash; RPG Quest Management System</p>
-            </div>
-        </footer>
-
+      <footer class="footer">
+        <div class="container">
+          <p>
+            Quest Manager Game &copy; 2026 &mdash; RPG Quest Management System
+          </p>
+        </div>
+      </footer>
     </div>
-</body>
+  </body>
 </html>

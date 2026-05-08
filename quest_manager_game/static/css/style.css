@@ -1,34 +1,67 @@
 /*
- * Quest Manager Game - Main Stylesheet
- * RPG-themed dark UI with fantasy styling
+ * Quest Manager Game - Neon Game Dev Stylesheet
+ * Cyberpunk / Game Dev theme with neon accents
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 /* ========================================================================
    CSS RESET & VARIABLES
    ======================================================================== */
 
 :root {
-    /* Color palette - Dark RPG theme */
-    --bg-primary: #1a1a2e;
-    --bg-secondary: #16213e;
-    --bg-card: #0f3460;
-    --bg-input: #1a1a3e;
-    --text-primary: #e8e8e8;
-    --text-secondary: #a0a0b0;
-    --text-muted: #6c6c7c;
-    --accent-gold: #e2b714;
-    --accent-blue: #4fc3f7;
-    --accent-green: #66bb6a;
-    --accent-red: #ef5350;
-    --accent-purple: #ab47bc;
-    --accent-orange: #ffa726;
-    --border-color: #2a2a4e;
-    --shadow-color: rgba(0, 0, 0, 0.4);
+    /* === CORE PALETTE === */
+    --bg-primary: #080c14;
+    --bg-secondary: #0b1220;
+    --bg-card: #0d1a2e;
+    --bg-input: #070d1a;
+    --bg-glass: rgba(13, 26, 46, 0.85);
 
-    /* Difficulty colors */
-    --easy-color: #66bb6a;
-    --medium-color: #ffa726;
-    --hard-color: #ef5350;
+    /* Text */
+    --text-primary: #e8eeff;
+    --text-secondary: #7a8fb5;
+    --text-muted: #3d4f6e;
+
+    /* === NEON COLORS === */
+    --neon-yellow: #f5e642;
+    --neon-yellow-glow: rgba(245, 230, 66, 0.6);
+    --neon-yellow-soft: rgba(245, 230, 66, 0.15);
+
+    --neon-cyan: #00f5ff;
+    --neon-cyan-glow: rgba(0, 245, 255, 0.55);
+    --neon-cyan-soft: rgba(0, 245, 255, 0.12);
+
+    --neon-pink: #ff2d78;
+    --neon-pink-glow: rgba(255, 45, 120, 0.55);
+    --neon-pink-soft: rgba(255, 45, 120, 0.12);
+
+    --neon-green: #39ff14;
+    --neon-green-glow: rgba(57, 255, 20, 0.5);
+    --neon-green-soft: rgba(57, 255, 20, 0.1);
+
+    --neon-purple: #bf00ff;
+    --neon-purple-glow: rgba(191, 0, 255, 0.55);
+    --neon-purple-soft: rgba(191, 0, 255, 0.12);
+
+    --neon-orange: #ff7000;
+    --neon-orange-glow: rgba(255, 112, 0, 0.55);
+
+    /* Semantic aliases */
+    --accent-gold: var(--neon-yellow);
+    --accent-blue: var(--neon-cyan);
+    --accent-green: var(--neon-green);
+    --accent-red: var(--neon-pink);
+    --accent-purple: var(--neon-purple);
+    --accent-orange: var(--neon-orange);
+
+    --easy-color: var(--neon-green);
+    --medium-color: var(--neon-yellow);
+    --hard-color: var(--neon-pink);
+
+    /* Border */
+    --border-color: #1a2a44;
+    --border-neon: rgba(0, 245, 255, 0.3);
+    --shadow-color: rgba(0, 0, 0, 0.7);
 
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -39,12 +72,14 @@
     --spacing-xxl: 3rem;
 
     /* Border radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
 
     /* Font */
-    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-main: 'Rajdhani', 'Segoe UI', sans-serif;
+    --font-display: 'Orbitron', monospace;
+    --font-mono: 'Share Tech Mono', monospace;
 }
 
 * {
@@ -59,16 +94,31 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
+    font-size: 1.05rem;
+    /* Scanline overlay subtle */
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 245, 255, 0.015) 2px,
+            rgba(0, 245, 255, 0.015) 4px
+        ),
+        radial-gradient(ellipse at 20% 50%, rgba(0, 245, 255, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(245, 230, 66, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 60% 80%, rgba(255, 45, 120, 0.04) 0%, transparent 60%);
+    background-attachment: fixed;
 }
 
 a {
-    color: var(--accent-blue);
+    color: var(--neon-cyan);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: all 0.2s;
 }
 
 a:hover {
-    color: var(--accent-gold);
+    color: var(--neon-yellow);
+    text-shadow: 0 0 8px var(--neon-yellow-glow);
 }
 
 /* ========================================================================
@@ -97,10 +147,34 @@ a:hover {
    ======================================================================== */
 
 .navbar {
-    background-color: var(--bg-secondary);
-    border-bottom: 2px solid var(--accent-gold);
+    background-color: rgba(8, 12, 20, 0.95);
+    border-bottom: 1px solid var(--neon-cyan);
     padding: var(--spacing-md) 0;
-    box-shadow: 0 2px 10px var(--shadow-color);
+    box-shadow:
+        0 0 20px rgba(0, 245, 255, 0.2),
+        0 2px 30px var(--shadow-color);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--neon-cyan) 20%,
+        var(--neon-yellow) 50%,
+        var(--neon-pink) 80%,
+        transparent 100%
+    );
+    filter: blur(1px);
 }
 
 .navbar .container {
@@ -110,17 +184,24 @@ a:hover {
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--accent-gold) !important;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--neon-yellow) !important;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    text-shadow:
+        0 0 10px var(--neon-yellow-glow),
+        0 0 30px rgba(245, 230, 66, 0.3);
+    letter-spacing: 2px;
 }
 
 .navbar-brand:hover {
-    color: var(--accent-gold) !important;
-    opacity: 0.9;
+    color: var(--neon-yellow) !important;
+    text-shadow:
+        0 0 15px var(--neon-yellow-glow),
+        0 0 40px rgba(245, 230, 66, 0.4);
 }
 
 .navbar-nav {
@@ -131,21 +212,30 @@ a:hover {
 }
 
 .navbar-nav a {
-    color: var(--text-primary);
-    font-weight: 500;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    font-weight: 600;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
     transition: all 0.2s;
+    text-transform: uppercase;
+    border: 1px solid transparent;
 }
 
 .navbar-nav a:hover {
-    color: var(--accent-gold);
-    background-color: rgba(226, 183, 20, 0.1);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan-glow);
+    border-color: rgba(0, 245, 255, 0.4);
+    background: var(--neon-cyan-soft);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.15), inset 0 0 15px rgba(0, 245, 255, 0.05);
 }
 
 .navbar-nav .nav-user {
-    color: var(--accent-blue);
-    font-weight: 600;
+    color: var(--neon-yellow);
+    font-weight: 700;
+    text-shadow: 0 0 8px var(--neon-yellow-glow);
 }
 
 /* ========================================================================
@@ -153,18 +243,37 @@ a:hover {
    ======================================================================== */
 
 .card {
-    background-color: var(--bg-card);
+    background: linear-gradient(135deg, rgba(13, 26, 46, 0.9) 0%, rgba(8, 16, 32, 0.95) 100%);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
     margin-bottom: var(--spacing-lg);
-    box-shadow: 0 4px 15px var(--shadow-color);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow:
+        0 4px 20px var(--shadow-color),
+        inset 0 1px 0 rgba(0, 245, 255, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    opacity: 0.5;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--shadow-color);
+    transform: translateY(-3px);
+    border-color: rgba(0, 245, 255, 0.4);
+    box-shadow:
+        0 8px 30px var(--shadow-color),
+        0 0 20px rgba(0, 245, 255, 0.1),
+        inset 0 1px 0 rgba(0, 245, 255, 0.15);
 }
 
 .card-header {
@@ -177,9 +286,12 @@ a:hover {
 }
 
 .card-title {
-    font-size: 1.3rem;
-    color: var(--accent-gold);
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--neon-yellow);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px var(--neon-yellow-glow);
 }
 
 /* ========================================================================
@@ -193,9 +305,12 @@ a:hover {
 .form-group label {
     display: block;
     margin-bottom: var(--spacing-xs);
-    color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 0.9rem;
+    color: var(--neon-cyan);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(0, 245, 255, 0.4);
 }
 
 .form-input {
@@ -206,17 +321,23 @@ a:hover {
     border-radius: var(--radius-md);
     color: var(--text-primary);
     font-size: 1rem;
+    font-family: var(--font-main);
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-input:focus {
     outline: none;
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 0 3px rgba(226, 183, 20, 0.2);
+    border-color: var(--neon-cyan);
+    box-shadow:
+        0 0 0 2px rgba(0, 245, 255, 0.15),
+        0 0 15px rgba(0, 245, 255, 0.2),
+        inset 0 0 10px rgba(0, 245, 255, 0.05);
+    background-color: rgba(0, 245, 255, 0.04);
 }
 
 .form-input::placeholder {
     color: var(--text-muted);
+    font-style: italic;
 }
 
 select.form-input {
@@ -232,13 +353,14 @@ textarea.form-input {
 .form-checkbox {
     width: auto;
     margin-right: var(--spacing-sm);
-    accent-color: var(--accent-gold);
+    accent-color: var(--neon-yellow);
 }
 
 .form-error {
-    color: var(--accent-red);
+    color: var(--neon-pink);
     font-size: 0.85rem;
     margin-top: var(--spacing-xs);
+    text-shadow: 0 0 5px var(--neon-pink-glow);
 }
 
 .form-help {
@@ -254,64 +376,99 @@ textarea.form-input {
 .btn {
     display: inline-block;
     padding: var(--spacing-sm) var(--spacing-lg);
-    border: none;
+    border: 1px solid;
     border-radius: var(--radius-md);
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
     text-decoration: none;
     line-height: 1.5;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transition: left 0.4s;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
-    background-color: var(--accent-gold);
-    color: var(--bg-primary);
+    background-color: var(--neon-yellow);
+    border-color: var(--neon-yellow);
+    color: #080c14;
+    box-shadow: 0 0 15px var(--neon-yellow-glow), 0 0 30px rgba(245,230,66,0.2);
 }
 
 .btn-primary:hover {
-    background-color: #c9a012;
-    color: var(--bg-primary);
-    transform: translateY(-1px);
+    background-color: #fff06a;
+    border-color: #fff06a;
+    color: #080c14;
+    box-shadow: 0 0 25px var(--neon-yellow-glow), 0 0 50px rgba(245,230,66,0.3);
+    transform: translateY(-2px);
 }
 
 .btn-success {
-    background-color: var(--accent-green);
-    color: white;
+    background-color: transparent;
+    border-color: var(--neon-green);
+    color: var(--neon-green);
+    box-shadow: 0 0 12px var(--neon-green-glow);
+    text-shadow: 0 0 8px var(--neon-green-glow);
 }
 
 .btn-success:hover {
-    background-color: #4caf50;
-    color: white;
-    transform: translateY(-1px);
+    background-color: var(--neon-green-soft);
+    box-shadow: 0 0 25px var(--neon-green-glow), 0 0 50px rgba(57,255,20,0.2);
+    color: var(--neon-green);
+    transform: translateY(-2px);
 }
 
 .btn-danger {
-    background-color: var(--accent-red);
-    color: white;
+    background-color: transparent;
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow: 0 0 12px var(--neon-pink-glow);
+    text-shadow: 0 0 8px var(--neon-pink-glow);
 }
 
 .btn-danger:hover {
-    background-color: #d32f2f;
-    color: white;
-    transform: translateY(-1px);
+    background-color: var(--neon-pink-soft);
+    box-shadow: 0 0 25px var(--neon-pink-glow), 0 0 50px rgba(255,45,120,0.2);
+    color: var(--neon-pink);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background-color: var(--border-color);
-    color: var(--text-primary);
+    background-color: transparent;
+    border-color: var(--border-neon);
+    color: var(--text-secondary);
 }
 
 .btn-secondary:hover {
-    background-color: #3a3a5e;
-    color: var(--text-primary);
-    transform: translateY(-1px);
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    background-color: var(--neon-cyan-soft);
+    box-shadow: 0 0 15px rgba(0,245,255,0.15);
+    transform: translateY(-2px);
 }
 
 .btn-sm {
     padding: var(--spacing-xs) var(--spacing-md);
-    font-size: 0.85rem;
+    font-size: 0.65rem;
 }
 
 .btn-block {
@@ -332,32 +489,42 @@ textarea.form-input {
     padding: var(--spacing-md) var(--spacing-lg);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
-    font-weight: 500;
-    border-left: 4px solid;
+    font-weight: 600;
+    border-left: 3px solid;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
 }
 
 .alert-success {
-    background-color: rgba(102, 187, 106, 0.15);
-    border-left-color: var(--accent-green);
-    color: var(--accent-green);
+    background-color: rgba(57, 255, 20, 0.08);
+    border-left-color: var(--neon-green);
+    color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.1), inset 0 0 20px rgba(57, 255, 20, 0.05);
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.4);
 }
 
 .alert-error {
-    background-color: rgba(239, 83, 80, 0.15);
-    border-left-color: var(--accent-red);
-    color: var(--accent-red);
+    background-color: rgba(255, 45, 120, 0.08);
+    border-left-color: var(--neon-pink);
+    color: var(--neon-pink);
+    box-shadow: 0 0 15px rgba(255, 45, 120, 0.1), inset 0 0 20px rgba(255, 45, 120, 0.05);
+    text-shadow: 0 0 5px rgba(255, 45, 120, 0.4);
 }
 
 .alert-warning {
-    background-color: rgba(255, 167, 38, 0.15);
-    border-left-color: var(--accent-orange);
-    color: var(--accent-orange);
+    background-color: rgba(245, 230, 66, 0.08);
+    border-left-color: var(--neon-yellow);
+    color: var(--neon-yellow);
+    box-shadow: 0 0 15px rgba(245, 230, 66, 0.1), inset 0 0 20px rgba(245, 230, 66, 0.05);
+    text-shadow: 0 0 5px rgba(245, 230, 66, 0.4);
 }
 
 .alert-info {
-    background-color: rgba(79, 195, 247, 0.15);
-    border-left-color: var(--accent-blue);
-    color: var(--accent-blue);
+    background-color: rgba(0, 245, 255, 0.08);
+    border-left-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.1), inset 0 0 20px rgba(0, 245, 255, 0.05);
+    text-shadow: 0 0 5px rgba(0, 245, 255, 0.4);
 }
 
 /* ========================================================================
@@ -366,12 +533,15 @@ textarea.form-input {
 
 .table-wrapper {
     overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.05);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: 0;
 }
 
 table th,
@@ -382,16 +552,22 @@ table td {
 }
 
 table th {
-    background-color: var(--bg-secondary);
-    color: var(--accent-gold);
-    font-weight: 600;
+    background: linear-gradient(90deg, rgba(0,245,255,0.08), rgba(245,230,66,0.05));
+    color: var(--neon-yellow);
+    font-family: var(--font-display);
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 8px var(--neon-yellow-glow);
 }
 
 table tr:hover {
-    background-color: rgba(226, 183, 20, 0.05);
+    background-color: rgba(0, 245, 255, 0.04);
+}
+
+table tr:last-child td {
+    border-bottom: none;
 }
 
 /* ========================================================================
@@ -401,57 +577,71 @@ table tr:hover {
 .badge {
     display: inline-block;
     padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    border-radius: 2px;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .badge-easy {
-    background-color: rgba(102, 187, 106, 0.2);
-    color: var(--easy-color);
-    border: 1px solid var(--easy-color);
+    background-color: rgba(57, 255, 20, 0.1);
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
+    text-shadow: 0 0 5px var(--neon-green-glow);
 }
 
 .badge-medium {
-    background-color: rgba(255, 167, 38, 0.2);
-    color: var(--medium-color);
-    border: 1px solid var(--medium-color);
+    background-color: rgba(245, 230, 66, 0.1);
+    color: var(--neon-yellow);
+    border: 1px solid var(--neon-yellow);
+    box-shadow: 0 0 8px rgba(245, 230, 66, 0.3);
+    text-shadow: 0 0 5px var(--neon-yellow-glow);
 }
 
 .badge-hard {
-    background-color: rgba(239, 83, 80, 0.2);
-    color: var(--hard-color);
-    border: 1px solid var(--hard-color);
+    background-color: rgba(255, 45, 120, 0.1);
+    color: var(--neon-pink);
+    border: 1px solid var(--neon-pink);
+    box-shadow: 0 0 8px rgba(255, 45, 120, 0.3);
+    text-shadow: 0 0 5px var(--neon-pink-glow);
 }
 
 .badge-accepted {
-    background-color: rgba(79, 195, 247, 0.2);
-    color: var(--accent-blue);
-    border: 1px solid var(--accent-blue);
+    background-color: rgba(0, 245, 255, 0.1);
+    color: var(--neon-cyan);
+    border: 1px solid var(--neon-cyan);
+    box-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+    text-shadow: 0 0 5px var(--neon-cyan-glow);
 }
 
 .badge-completed {
-    background-color: rgba(102, 187, 106, 0.2);
-    color: var(--accent-green);
-    border: 1px solid var(--accent-green);
+    background-color: rgba(57, 255, 20, 0.1);
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
 }
 
 .badge-available {
-    background-color: rgba(171, 71, 188, 0.2);
-    color: var(--accent-purple);
-    border: 1px solid var(--accent-purple);
+    background-color: rgba(191, 0, 255, 0.1);
+    color: var(--neon-purple);
+    border: 1px solid var(--neon-purple);
+    box-shadow: 0 0 8px rgba(191, 0, 255, 0.3);
+    text-shadow: 0 0 5px var(--neon-purple-glow);
 }
 
 .badge-active {
-    background-color: rgba(102, 187, 106, 0.2);
-    color: var(--accent-green);
+    background-color: rgba(57, 255, 20, 0.1);
+    color: var(--neon-green);
+    box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
 }
 
 .badge-inactive {
-    background-color: rgba(239, 83, 80, 0.2);
-    color: var(--accent-red);
+    background-color: rgba(255, 45, 120, 0.1);
+    color: var(--neon-pink);
+    box-shadow: 0 0 8px rgba(255, 45, 120, 0.2);
 }
 
 /* ========================================================================
@@ -466,27 +656,50 @@ table tr:hover {
 }
 
 .stat-card {
-    background-color: var(--bg-card);
+    background: linear-gradient(135deg, rgba(13, 26, 46, 0.9), rgba(8, 12, 20, 0.95));
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     text-align: center;
-    box-shadow: 0 4px 15px var(--shadow-color);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow));
+    filter: blur(1px);
+}
+
+.stat-card:hover {
+    border-color: rgba(245, 230, 66, 0.4);
+    box-shadow: 0 0 30px rgba(245, 230, 66, 0.1), 0 4px 20px var(--shadow-color);
+    transform: translateY(-2px);
 }
 
 .stat-value {
+    font-family: var(--font-display);
     font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--accent-gold);
+    font-weight: 900;
+    color: var(--neon-yellow);
     line-height: 1.2;
+    text-shadow: 0 0 20px var(--neon-yellow-glow), 0 0 40px rgba(245, 230, 66, 0.2);
 }
 
 .stat-label {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     margin-top: var(--spacing-xs);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px;
+    font-family: var(--font-display);
 }
 
 /* ========================================================================
@@ -494,26 +707,42 @@ table tr:hover {
    ======================================================================== */
 
 .xp-bar-container {
-    background-color: var(--bg-input);
-    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
     overflow: hidden;
-    height: 24px;
+    height: 20px;
     margin: var(--spacing-sm) 0;
     border: 1px solid var(--border-color);
+    position: relative;
 }
 
 .xp-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-gold), #f0d060);
-    border-radius: 20px;
-    transition: width 0.5s ease;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-yellow), var(--neon-green));
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
     font-weight: bold;
-    color: var(--bg-primary);
+    color: #080c14;
     min-width: 30px;
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.6), 0 0 30px rgba(245, 230, 66, 0.3);
+    position: relative;
+}
+
+.xp-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: white;
+    filter: blur(3px);
+    opacity: 0.8;
 }
 
 /* ========================================================================
@@ -521,11 +750,27 @@ table tr:hover {
    ======================================================================== */
 
 .character-card {
-    background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
-    border: 2px solid var(--accent-gold);
+    background: linear-gradient(135deg, rgba(13, 26, 46, 0.95), rgba(8, 12, 20, 0.98));
+    border: 1px solid var(--neon-yellow);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
+    box-shadow:
+        0 0 30px rgba(245, 230, 66, 0.15),
+        0 0 60px rgba(245, 230, 66, 0.05),
+        inset 0 0 30px rgba(245, 230, 66, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-yellow), var(--neon-cyan), transparent);
 }
 
 .character-header {
@@ -536,15 +781,23 @@ table tr:hover {
 }
 
 .character-name {
-    font-size: 2rem;
-    color: var(--accent-gold);
-    font-weight: bold;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--neon-yellow);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 15px var(--neon-yellow-glow),
+        0 0 30px rgba(245, 230, 66, 0.2);
 }
 
 .character-class {
-    color: var(--accent-purple);
-    font-size: 1.1rem;
-    font-weight: 500;
+    color: var(--neon-purple);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: var(--font-display);
+    text-shadow: 0 0 10px var(--neon-purple-glow);
 }
 
 .character-stats {
@@ -557,20 +810,31 @@ table tr:hover {
 .character-stat {
     text-align: center;
     padding: var(--spacing-md);
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.character-stat:hover {
+    border-color: rgba(0, 245, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.1);
 }
 
 .character-stat-value {
+    font-family: var(--font-display);
     font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--accent-gold);
+    font-weight: 900;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 15px var(--neon-cyan-glow);
 }
 
 .character-stat-label {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: var(--font-display);
 }
 
 /* ========================================================================
@@ -583,24 +847,56 @@ table tr:hover {
 }
 
 .auth-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(13, 26, 46, 0.95), rgba(8, 12, 20, 0.98));
+    border: 1px solid var(--neon-cyan);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xxl);
-    box-shadow: 0 8px 30px var(--shadow-color);
+    box-shadow:
+        0 0 40px rgba(0, 245, 255, 0.15),
+        0 0 80px rgba(0, 245, 255, 0.05),
+        0 8px 40px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-yellow));
+}
+
+.auth-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-yellow), var(--neon-cyan), var(--neon-pink));
 }
 
 .auth-title {
     text-align: center;
-    font-size: 1.8rem;
-    color: var(--accent-gold);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--neon-yellow);
     margin-bottom: var(--spacing-xl);
+    letter-spacing: 3px;
+    text-shadow:
+        0 0 15px var(--neon-yellow-glow),
+        0 0 30px rgba(245, 230, 66, 0.2);
 }
 
 .auth-footer {
     text-align: center;
     margin-top: var(--spacing-lg);
     color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 /* ========================================================================
@@ -610,22 +906,58 @@ table tr:hover {
 .hero {
     text-align: center;
     padding: var(--spacing-xxl) 0;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(245, 230, 66, 0.06) 0%, transparent 70%);
+    pointer-events: none;
 }
 
 .hero-title {
-    font-size: 3rem;
-    color: var(--accent-gold);
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--neon-yellow);
     margin-bottom: var(--spacing-md);
-    text-shadow: 0 2px 10px rgba(226, 183, 20, 0.3);
+    letter-spacing: 3px;
+    text-shadow:
+        0 0 20px var(--neon-yellow-glow),
+        0 0 60px rgba(245, 230, 66, 0.25),
+        0 0 100px rgba(245, 230, 66, 0.1);
+    animation: heroGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+    from {
+        text-shadow:
+            0 0 20px var(--neon-yellow-glow),
+            0 0 40px rgba(245, 230, 66, 0.2),
+            0 0 80px rgba(245, 230, 66, 0.1);
+    }
+    to {
+        text-shadow:
+            0 0 30px var(--neon-yellow-glow),
+            0 0 60px rgba(245, 230, 66, 0.3),
+            0 0 120px rgba(245, 230, 66, 0.15);
+    }
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-xl);
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.8;
 }
 
 .hero-actions {
@@ -643,27 +975,63 @@ table tr:hover {
 }
 
 .feature-card {
-    background-color: var(--bg-card);
+    background: linear-gradient(135deg, rgba(13, 26, 46, 0.9), rgba(8, 12, 20, 0.95));
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: var(--spacing-xl);
     text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card:nth-child(1) { --card-neon: var(--neon-cyan); --card-glow: rgba(0, 245, 255, 0.15); }
+.feature-card:nth-child(2) { --card-neon: var(--neon-yellow); --card-glow: rgba(245, 230, 66, 0.15); }
+.feature-card:nth-child(3) { --card-neon: var(--neon-pink); --card-glow: rgba(255, 45, 120, 0.15); }
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--card-neon, var(--neon-cyan));
+    box-shadow: 0 0 10px var(--card-neon, var(--neon-cyan));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.feature-card:hover {
+    border-color: var(--card-neon, var(--neon-cyan));
+    box-shadow: 0 0 25px var(--card-glow), 0 8px 30px var(--shadow-color);
+    transform: translateY(-4px);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
 }
 
 .feature-icon {
     font-size: 2.5rem;
     margin-bottom: var(--spacing-md);
+    display: block;
+    filter: drop-shadow(0 0 10px var(--card-neon, var(--neon-cyan)));
 }
 
 .feature-title {
-    color: var(--accent-gold);
-    font-size: 1.2rem;
+    font-family: var(--font-display);
+    color: var(--neon-yellow);
+    font-size: 1rem;
+    letter-spacing: 1px;
     margin-bottom: var(--spacing-sm);
+    text-shadow: 0 0 8px var(--neon-yellow-glow);
 }
 
 .feature-text {
     color: var(--text-secondary);
     font-size: 0.95rem;
+    line-height: 1.7;
 }
 
 /* ========================================================================
@@ -692,12 +1060,28 @@ table tr:hover {
     align-items: center;
     margin-bottom: var(--spacing-xl);
     padding-bottom: var(--spacing-md);
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 80px;
+    height: 1px;
+    background: var(--neon-yellow);
+    box-shadow: 0 0 8px var(--neon-yellow-glow);
 }
 
 .page-title {
-    font-size: 1.8rem;
-    color: var(--accent-gold);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--neon-yellow);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px var(--neon-yellow-glow);
 }
 
 /* ========================================================================
@@ -710,7 +1094,21 @@ table tr:hover {
     padding: var(--spacing-lg) 0;
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.footer::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), transparent);
+    opacity: 0.5;
 }
 
 /* ========================================================================
@@ -725,6 +1123,7 @@ table tr:hover {
 .confirm-box p {
     margin-bottom: var(--spacing-lg);
     font-size: 1.1rem;
+    color: var(--text-secondary);
 }
 
 .confirm-actions {
@@ -749,7 +1148,8 @@ table tr:hover {
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        letter-spacing: 2px;
     }
 
     .grid-2 {
@@ -784,5 +1184,39 @@ table tr:hover {
 
 .empty-state p {
     margin-bottom: var(--spacing-lg);
-    font-size: 1.1rem;
+    font-size: 1rem;
+    font-family: var(--font-mono);
+}
+
+/* ========================================================================
+   SCROLLBAR NEON STYLE
+   ======================================================================== */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-cyan);
+    border-radius: 3px;
+    box-shadow: 0 0 6px var(--neon-cyan-glow);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-yellow);
+    box-shadow: 0 0 8px var(--neon-yellow-glow);
+}
+
+/* ========================================================================
+   SELECTION
+   ======================================================================== */
+
+::selection {
+    background: rgba(0, 245, 255, 0.25);
+    color: var(--neon-cyan);
 }
